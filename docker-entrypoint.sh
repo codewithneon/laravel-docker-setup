@@ -24,10 +24,14 @@ if [ ! -f artisan ]; then
 fi
 
 # -----------------------------------
-# 2. Ensure correct .env (IMPORTANT)
+# 2. Apply Docker .env only if .env is missing or empty
 # -----------------------------------
-echo "Applying Docker environment configuration..."
-cp .env.docker .env
+if [ ! -s .env ]; then
+    echo ".env not found or empty. Copying .env.docker..."
+    cp .env.docker .env
+else
+    echo ".env already exists and is not empty. Skipping .env.docker copy."
+fi
 
 # -----------------------------------
 # 3. Install dependencies
